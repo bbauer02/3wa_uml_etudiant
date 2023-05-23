@@ -1,0 +1,10 @@
+@startuml
+
+abstract class AbstractClass {
+    +templateMethod()
+    -primitiveOperation1()
+    -primitiveOperation2()
+    + {abstract} concreteOperation()
+    +hook()
+}
+@enduml

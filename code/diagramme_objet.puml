@@ -1,0 +1,34 @@
+@startuml
+
+
+' Michel conduit le bus B sur la ligne 1 : 
+object "Michel : Driver" as michel
+object "bus B : Bus" as busB
+object "ligne 1 : Line" as ligne1
+michel -- busB 
+busB -- ligne1
+
+' Paul consuit le bus B sur la ligne 2 :
+object "Paul : Driver" as paul
+object "ligne 2 : Line" as ligne2
+paul -- busB
+busB -- ligne2
+
+' associer les drivers aux lignes :
+
+michel -- ligne1
+paul -- ligne2
+
+' Michel conduit le bus B sur la ligne 2 :
+
+michel -- ligne2
+
+' Michel et paul consuisent le bus C sur les lignes 1 et 2
+object "bus C : Bus" as busC
+
+michel -- busC
+paul -- busC
+busC -- ligne1
+busC -- ligne2
+
+@enduml

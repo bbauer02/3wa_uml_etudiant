@@ -1,0 +1,20 @@
+@startuml
+
+class Bus {
+
+}
+
+class Driver {
+
+}
+
+class BusLine {
+
+}
+
+
+Driver "*" -- "*" Bus : > drive
+Driver "*" -- "*" BusLine : > drive on
+Bus "*" -- "*" BusLine : > use
+
+@enduml
