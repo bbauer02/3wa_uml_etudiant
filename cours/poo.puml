@@ -155,7 +155,7 @@ Item "1" <-- "*" ItemBuilder : "<<Create>>"
 Item "*" <--* "0..1" Equipment
 Item  --> "0,1" ItemQuality
 Item  --> "0,1" ItemCategory
-Director ..> Builder
+Director ..> ItemBuilder
 
 }
 
@@ -182,7 +182,7 @@ class Guild {
     +getMember( string name ) : Playable
 }
 
-Guild "1" o-- "1..*" Playable
+Guild "0..1" o-- "1..*" Character
 
 class Party {
     -members : Playable[]
@@ -192,7 +192,7 @@ class Party {
     +getMember( string name ) : Playable
 }
 
-Party "1" o--> "1..*" Playable
+Party "0..1" o--> "0..*" Character
 
 @enduml
 
