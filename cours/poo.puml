@@ -1,0 +1,202 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Equipment {
+    -items : Item[]
+
+}
+
+
+abstract class Character <<Abstract>> {
+    -name : string
+    -health : int
+    -equipment : Equipment
+    -guild : Guild
+    +{abstract}attack( Character target ) : void
+    +isAlive() : bool
+    +die() : void
+    +getHurt(int damage) : void
+
+}
+
+class Mage {
+    -Mana : int
+    +spell( Character target ) : void
+    +attack( Character target ): void
+    +move() : void
+    +jump() : void
+}
+
+class Warrior {
+    -rage : int
+    +slash( Character target ) : void
+    +attack( Character target ) : void
+    +move() : void
+    +jump() : void
+}
+
+
+
+
+interface Playable  <<Interface>> {
++ move() : void
++ jump() : void
+}
+interface Lootable <<Interface>> {
+    +dropLoot() : Item[]
+}
+class Mob {
+    -LootTable : Item[]
+    + dropLoot() : Item[]
+    +isAggro( Character target ) : bool
+    +attack( Character target ) : void
+}
+
+class Elite {
+    +specialAttack( Character target ) : void
+}
+
+enum ItemQuality <<Enum>> {
+  UNCOMMON,
+  RARE,
+  EPIC,
+  LEGENDARY,
+  ARTIFACT,
+  MYTHIC
+}
+
+
+
+
+enum ItemCategory <<Enum>> {
+  WEAPON_1H,
+  WEAPON_2H,
+  SHIELD,
+  JEWEL,
+  WAND,
+  BOOK,
+  STAFF
+}
+
+namespace  Design_Pattern_BUILDER  {
+
+note as A
+
+    <b>Pour générer un item :</b>
+    director = new Director()
+    ItemBuilder builder = new ItemBuilder()
+    director.makeEpicItem(builder)
+    Item sword = builder.getResult()
+end note
+
+interface Builder <<Interface>> {
+    +reset()
+    +addName( string name )
+    +addQuality( ItemQuality quality )
+    +addDropRate( int dropRate )
+    +addCategory()
+
+    +addBonusDamage( int damage )
+    +addBonusHp( int hp )
+    +addBonusRage( int rage )
+    +addBonusMana( int mana )
+    +addBonusProtection( int protection )
+    +getItem() : Item
+}
+
+
+
+
+class Director {
+    +makeUncommonItem( Builder builder )
+    +makeRareItem( Builder builder )
+    +makeEpicItem( Builder builder )
+    +makeLegendaryItem( Builder builder )
+    +makeArtifactItem( Builder builder )
+    +makeMythicItem( Builder builder )
+    +makeLameTonnerre(Builder builder)
+    +makeGlamdring(Builder builder)
+
+}
+
+class ItemBuilder  {
+    -item: Item
+    +reset()
+    +addName( string name )
+    +addQuality( Quality quality )
+    +addDropRate( int dropRate )
+    +addCategory()
+    +addBonusDamage( int damage )
+    +addBonusHp( int hp )
+    +addBonusRage( int rage )
+    +addBonusMana( int mana )
+    +addBonusProtection( int protection )
+
+    +getResult() : Item
+}
+
+
+
+class Item {
+    -name? : string | null
+    -dropRate? : int | null
+    -category? : ItemCategory | null
+    -quality?: ItemQuality | null
+    -bonusDamage? : int | null
+    -bonusHp?: int | null
+    -bonusRage? : int | null
+    -bonusMana? : int | null
+    -bonusProtection? : int | null
+}
+
+
+ItemBuilder ..|> Builder
+Item "1" <-- "*" ItemBuilder : "<<Create>>"
+Item "*" <--* "0..1" Equipment
+Item  --> "0,1" ItemQuality
+Item  --> "0,1" ItemCategory
+Director ..> Builder
+
+}
+
+Equipment "1" <--* "1" Character
+
+Playable <|.. Mage
+Playable <|.. Warrior
+
+Character <|-- Mage
+Character <|-- Warrior
+Character <|-- Mob
+
+Mob <|-- Elite
+
+Lootable <|.. Mob
+
+
+class Guild {
+    -name : string
+    -members : Playable[]
+    +addMember( Playable member ) : void
+    +removeMember( Playable member ) : void
+    +getMembers() : Playable[]
+    +getMember( string name ) : Playable
+}
+
+Guild "1" o-- "1..*" Playable
+
+class Party {
+    -members : Playable[]
+    +addMember( Playable member ) : void
+    +removeMember( Playable member ) : void
+    +getMembers() : Playable[]
+    +getMember( string name ) : Playable
+}
+
+Party "1" o--> "1..*" Playable
+
+@enduml
+
+
+
+
+
