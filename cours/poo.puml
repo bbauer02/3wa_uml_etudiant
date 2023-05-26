@@ -78,7 +78,7 @@ enum ItemCategory <<Enum>> {
   STAFF
 }
 
-namespace  Design_Pattern_BUILDER  {
+' namespace  Design_Pattern_BUILDER  {
 
 note as A
 
@@ -157,7 +157,7 @@ Item  --> "0,1" ItemQuality
 Item  --> "0,1" ItemCategory
 Director ..> ItemBuilder
 
-}
+'}
 
 Equipment "1" <--* "1" Character
 
